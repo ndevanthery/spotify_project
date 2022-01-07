@@ -20,31 +20,19 @@ public class MusicModel
         return url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 
     public String getMusicName() {
         return musicName;
     }
 
-    public void setMusicName(String musicName) {
-        this.musicName = musicName;
-    }
 
     public String getArtiste() {
         return artiste;
     }
 
-    public void setArtiste(String artiste) {
-        this.artiste = artiste;
-    }
 
     public String getAlbum() {
         return album;
     }
 
-    public void setAlbum(String album) {
-        this.album = album;
-    }
 }

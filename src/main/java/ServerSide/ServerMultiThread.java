@@ -11,18 +11,24 @@ import java.util.List;
 
 public class ServerMultiThread {
     public static List<ClientInfos> connectedClients;
-
+    private static InetAddress localAddress;
+    private static ServerSocket mySkServer;
     public static void main(String[] args){
 
-        Socket srvSocket = null ;
-        InetAddress localAddress = null;
-        ServerSocket mySkServer;
+
+        localAddress = null;
         String interfaceName = "lo";
+
+        //create an empty list for connected clients
         connectedClients = new ArrayList<ClientInfos>();
 
+
+        //intitiale value for the client number. increments each time someone connects
         int ClientNo = 1;
 
         try {
+
+            //get ip address of the local machine
             NetworkInterface ni = NetworkInterface.getByName(interfaceName);
             Enumeration<InetAddress> inetAddresses =  ni.getInetAddresses();
             while(inetAddresses.hasMoreElements()) {
@@ -38,18 +44,23 @@ public class ServerMultiThread {
 
             //Warning : the backlog value (2nd parameter is handled by the implementation
             mySkServer = new ServerSocket(45000,10,localAddress);
-            System.out.println("Default Timeout :" + mySkServer.getSoTimeout());
+
             System.out.println("Used IpAddress :" + mySkServer.getInetAddress());
             System.out.println("Listening to Port :" + mySkServer.getLocalPort());
 
-            //wait for a client connection
+            //loops forever to wait new clients
             while(true)
             {
                 System.out.println("waiting for new client");
+                //wait for a client connection
                 Socket clientSocket = mySkServer.accept();
-                System.out.println("connection request received");
+
+                //create a new thread for the client that just connected
                 Thread t = new Thread(new AcceptClient(clientSocket,ClientNo));
+
+                //increase the client ID
                 ClientNo++;
+
                 //starting the thread
                 t.start();
             }
