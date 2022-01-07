@@ -1,17 +1,10 @@
 package ClientSide;
 
-import ServerSide.AcceptClient;
-import ServerSide.ClientInfos;
+import ServerSide.Log;
 
 import javax.sound.sampled.*;
-import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.nio.file.FileSystem;
-import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -21,6 +14,7 @@ public class Client {
     //two lines to use the colors in the command line
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_RESET = "\u001B[0m";
+    private static Log log = new Log();
 
 
     //list of accepted file extensions
@@ -210,9 +204,11 @@ public class Client {
         catch (IOException e) {
             //in case there is an error with the server
             System.out.println("server connection error, dying.....");
+            log.severe("EXCEPTION :server connection error"+ e );
         }catch(NullPointerException e){
             e.printStackTrace();
             System.out.println("Connection interrupted with the server");
+            log.severe("EXCEPTION :Connection interrupted with the server"+ e );
         }
 
         //end of the client connection to the spotify server
@@ -220,7 +216,7 @@ public class Client {
         try {
             mySocket.close();
         } catch (IOException e) {
-
+                log.severe("EXCEPTION :"+e);
         }
     }
 
@@ -320,6 +316,7 @@ public class Client {
         } catch (IOException e) {
 
             e.printStackTrace();
+            log.severe("EXCEPTION : "+e);
         }
 
     }
@@ -391,14 +388,17 @@ public class Client {
 
             } catch (UnsupportedAudioFileException e) {
                 e.printStackTrace();
+                log.severe("EXCEPTION : "+e);
             } catch (LineUnavailableException e) {
                 e.printStackTrace();
+                log.severe("EXCEPTION : "+e);
             }
 
         }
         catch (IOException e)
         {
             System.out.println("PROBLEM WITH CONNECTION TO STREAM IP");
+            log.severe("EXCEPTION : "+e);
         }
     }
 

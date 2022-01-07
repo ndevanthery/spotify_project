@@ -1,6 +1,7 @@
 package ClientSide;
 
 import ServerSide.AcceptClient;
+import ServerSide.Log;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -10,6 +11,7 @@ import java.nio.file.Paths;
 
 public class OtherClientConnection implements Runnable{
     private ServerSocket mySkServer;
+    private Log log = new Log();
 
     public OtherClientConnection (ServerSocket mySkServer) {
         this.mySkServer = mySkServer;
@@ -25,7 +27,6 @@ public class OtherClientConnection implements Runnable{
 
                 //wait until a client wants to connect
                 Socket clientSocket = mySkServer.accept();
-
 
                 //open read/write on the socket to communicate with the other client
                 PrintWriter pout = new PrintWriter(clientSocket.getOutputStream(),true);
@@ -51,8 +52,6 @@ public class OtherClientConnection implements Runnable{
                 os.write(mybytearray, 0, mybytearray.length);
                 os.flush();
 
-
-
             }
 
 
@@ -61,6 +60,7 @@ public class OtherClientConnection implements Runnable{
         catch (IOException e) {
 
         e.printStackTrace();
+            log.severe("EXCEPTION : "+e);
     }
 
 

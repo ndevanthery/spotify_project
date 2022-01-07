@@ -1,8 +1,8 @@
 package ServerSide;
 
+import models.ClientInfos;
 import models.MusicModel;
 
-import javax.swing.text.MutableAttributeSet;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.logging.Logger;
 
 public class AcceptClient implements Runnable {
 
@@ -19,7 +19,8 @@ public class AcceptClient implements Runnable {
     private BufferedReader buffin;
     private Socket clientSocketOnServer;
     private int clientNumber;
-
+    private String username;
+    public Log log = new Log();
     //Constructor
     public AcceptClient (Socket clientSocketOnServer, int clientNo)
     {
@@ -40,7 +41,7 @@ public class AcceptClient implements Runnable {
 
 
             //recup username
-            String username = buffin.readLine();
+            username = buffin.readLine();
             System.out.println(username);
 
             //create empty list to store musics url of the client
@@ -98,8 +99,8 @@ public class AcceptClient implements Runnable {
 
             //add it to the clients list
             ServerMultiThread.connectedClients.add(newClient);
+            log.info("User : "+username+" is connected.");
 
-            System.out.println(newClient);
 
             boolean isRunning =true;
             //while the client doesn't send exit
@@ -118,12 +119,15 @@ public class AcceptClient implements Runnable {
                         exit();
                         //end the loop
                         isRunning=false;
+                        log.info("User : "+username+" disconnected");
                         break;
                     case "listUsers":
                         listUsers();
+                        log.info("User : "+username+" listed users");
                         break;
                     case "help":
                         help();
+                        log.info("User : "+username+" asked for help");
                         break;
 
                     case "listMusics":
@@ -131,12 +135,14 @@ public class AcceptClient implements Runnable {
                             //get the username in argument
                            String username_request =message_distant.split(" ")[1];
                             listMusics(username_request);
+                            log.info("User : "+username+" listed musics from "+username_request);
                         }
                         catch (Exception e)
                         {
                             //if the user doesn't write a username
                             pout.println("you must enter a username. write listUsers to see those who are connected");
                             pout.flush();
+                            log.severe("User : "+username+" entered a invalid username argument");
                         }
                         break;
                 case "stream":
@@ -146,20 +152,20 @@ public class AcceptClient implements Runnable {
                         //get the music id in arguments
                         int idMusic = Integer.parseInt(message_distant.split(" ")[2]);
                         stream(username_request,idMusic);
+                        log.info("User : "+ username+" started to stream music id : "+idMusic+" from : "+username_request);
                     }
                     catch (Exception e)
                     {
                         //if there is no argument or not the 2 required
                         pout.println("the stream inputs are not valids");
                         pout.flush();
+                        log.severe("EXCEPTION : "+e);
                     }
                     break;
                     default:
                         //if the command is not in the usable list
                         pout.println("command not recognized. type help if you need more infos");
                         pout.flush();
-
-
                 }
             }
 
@@ -179,6 +185,8 @@ public class AcceptClient implements Runnable {
 
         } catch (IOException e) {
             e.printStackTrace();
+            log.severe("EXCEPTION : "+e);
+
         }
     }
 
@@ -247,9 +255,6 @@ public class AcceptClient implements Runnable {
             }
             pout.flush();
         }
-
-
-
     }
     public ClientInfos getClient(String username)
     {
@@ -293,8 +298,9 @@ public class AcceptClient implements Runnable {
             }
             catch (Exception e)
             {
-                pout.println("this mucic id doesn't exist for this user");
+                pout.println("this music id doesn't exist for this user");
                 pout.flush();
+                log.severe("EXCEPTION : "+e);
             }
 
 

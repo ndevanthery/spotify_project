@@ -1,7 +1,7 @@
 package ServerSide;
 
 
-import ServerSide.AcceptClient;
+import models.ClientInfos;
 
 import java.io.IOException;
 import java.net.*;
@@ -13,12 +13,11 @@ public class ServerMultiThread {
     public static List<ClientInfos> connectedClients;
     private static InetAddress localAddress;
     private static ServerSocket mySkServer;
+    public static Log log = new Log();
     public static void main(String[] args){
-
 
         localAddress = null;
         String interfaceName = "lo";
-
         //create an empty list for connected clients
         connectedClients = new ArrayList<ClientInfos>();
 
@@ -44,10 +43,9 @@ public class ServerMultiThread {
 
             //Warning : the backlog value (2nd parameter is handled by the implementation
             mySkServer = new ServerSocket(45000,10,localAddress);
-
             System.out.println("Used IpAddress :" + mySkServer.getInetAddress());
             System.out.println("Listening to Port :" + mySkServer.getLocalPort());
-
+            log.info("Server online = port :"+mySkServer.getLocalPort()+" address :" + mySkServer.getInetAddress());
             //loops forever to wait new clients
             while(true)
             {
@@ -60,14 +58,13 @@ public class ServerMultiThread {
 
                 //increase the client ID
                 ClientNo++;
-
                 //starting the thread
                 t.start();
             }
 
         } catch (IOException e) {
-
             e.printStackTrace();
+            log.warning("EXCEPTION : "+e );
         }
     }
 }
