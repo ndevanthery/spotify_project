@@ -51,11 +51,7 @@ public class OtherClientConnection implements Runnable{
                 OutputStream os = clientSocket.getOutputStream();
                 os.write(mybytearray, 0, mybytearray.length);
                 os.flush();
-
             }
-
-
-
         }
         catch (IOException e) {
 

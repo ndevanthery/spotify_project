@@ -168,7 +168,6 @@ public class AcceptClient implements Runnable {
                         pout.flush();
                 }
             }
-
             //close the connection when the loop ends
             clientSocketOnServer.close();
             System.out.println("end of connection to the client " + clientNumber);
