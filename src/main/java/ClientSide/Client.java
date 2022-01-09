@@ -287,7 +287,7 @@ public class Client {
     private static void serverSocketInit()
     {
         InetAddress localAddress = null;
-        String interfaceName = "lo";
+        String interfaceName = "wlan2";
 
         try {
 
@@ -301,6 +301,7 @@ public class Client {
                     if(!ia.isLoopbackAddress()) {
                         System.out.println(ni.getName() + "->IP: " + ia.getHostAddress());
                         localAddress = ia;
+                        break;
                     }
                 }
             }

@@ -8,3 +8,21 @@ janv. 07, 2022 11:27:45 PM ServerSide.Log info
 INFO: User : abdullah asked for help
 janv. 07, 2022 11:27:49 PM ServerSide.Log info
 INFO: User : abdullah disconnected
+Jan 09, 2022 4:02:20 PM ServerSide.Log info
+INFO: Server online = port :45000 address :/192.168.1.194
+Jan 09, 2022 4:04:18 PM ServerSide.Log info
+INFO: User : nico is connected.
+Jan 09, 2022 4:05:39 PM ServerSide.Log info
+INFO: User : nico listed users
+Jan 09, 2022 4:08:35 PM ServerSide.Log info
+INFO: User : nicofixe is connected.
+Jan 09, 2022 4:09:10 PM ServerSide.Log info
+INFO: User : nicofixe listed users
+Jan 09, 2022 4:09:21 PM ServerSide.Log info
+INFO: User : nicofixe listed musics from nico
+Jan 09, 2022 4:09:29 PM ServerSide.Log info
+INFO: User : nicofixe started to stream music id : 6 from : nico
+Jan 09, 2022 4:10:11 PM ServerSide.Log info
+INFO: User : nicofixe listed users
+Jan 09, 2022 4:26:59 PM ServerSide.Log severe
+SEVERE: EXCEPTION : java.net.SocketException: Connection reset

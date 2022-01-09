@@ -17,7 +17,7 @@ public class ServerMultiThread {
     public static void main(String[] args){
 
         localAddress = null;
-        String interfaceName = "lo";
+        String interfaceName = "wlan2";
         //create an empty list for connected clients
         connectedClients = new ArrayList<ClientInfos>();
 
@@ -37,6 +37,7 @@ public class ServerMultiThread {
                     if(!ia.isLoopbackAddress()) {
                         System.out.println(ni.getName() + "->IP: " + ia.getHostAddress());
                         localAddress = ia;
+                        break;
                     }
                 }
             }
