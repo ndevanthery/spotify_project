@@ -1,7 +1,5 @@
 package ClientSide;
 
-import ServerSide.AcceptClient;
-import ServerSide.Log;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -11,7 +9,6 @@ import java.nio.file.Paths;
 
 public class OtherClientConnection implements Runnable{
     private ServerSocket mySkServer;
-    private Log log = new Log();
 
     public OtherClientConnection (ServerSocket mySkServer) {
         this.mySkServer = mySkServer;
@@ -56,7 +53,6 @@ public class OtherClientConnection implements Runnable{
         catch (IOException e) {
 
         e.printStackTrace();
-            log.severe("EXCEPTION : "+e);
     }
 
 
